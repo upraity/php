@@ -14,8 +14,6 @@
     echo strtolower("USER NAME IS DJ\n");// using this function all capital words  are lower 
     echo ucfirst("user name is dj\n");// using this function only first letter is capital 
     echo lcfirst("USER name is dj");// using this function first word first  letter is lower  
-
-
-    echo rtrim("  this is php "); // remove the right side space
-    echo ltrim(" this is php  "); // remove the left side space
+    echo rtrim("  this is php   "); // remove the right side spaces
+    echo ltrim("  this is php   "); // remove the left side spaces
 ?>

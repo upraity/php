@@ -4,7 +4,7 @@
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $database = "sabkacode";
+    $database = "sabkacode"; //already created db
 
     //create connection
     $conn = mysqli_connect($servername, $username, $password, $database);
@@ -17,7 +17,7 @@
     }
 
     //create database
-    $sql = "CREATE DATABASE sabkacode";
+    $sql = "CREATE DATABASE sabkacode1";
     $result = mysqli_query($conn, $sql);
 
     //Check for the db create success or not
@@ -28,7 +28,7 @@
     }
 
     //create table
-    $sql1 = "CREATE TABLE `user5` (`sno` INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(10) NOT NULL, `mobile` VARCHAR(10) NOT NULL, PRIMARY KEY(`sno`))";
+    $sql1 = "CREATE TABLE `user` (`sno` INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(10) NOT NULL, `mobile` VARCHAR(10) NOT NULL, PRIMARY KEY(`sno`))";
     $result1 = mysqli_query($conn, $sql1);
     
       //Check for the table create success or not
@@ -39,14 +39,14 @@
     }
 
     //Insert data into the table
-    $sql2 = "INSERT INTO `user5` (`name`, `mobile`) VALUES ('Ram', '8532824533')";
+    $sql2 = "INSERT INTO `user` (`name`, `mobile`) VALUES ('Ram', '8532824533')";
     $result2 = mysqli_query($conn, $sql2);
 
     ////Check for the insert data success or not
     if($result2){
-        echo "\nThe db was create successfully\n";
+        echo "\nInsert was  successfully\n";
     }else{
-        echo "The db was not create successfully becoz of this error " .mysqli_error($conn);
+        echo "Insert was not  successfully becoz of this error " .mysqli_error($conn);
     }
 
 

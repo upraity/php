@@ -1,6 +1,8 @@
 <?php
 
-    $add = false;
+    $add    = false;
+    $update = false;
+    $delete = false;
     // Connecting to the Db
     $servername = "localhost";
     $username = "root";
@@ -16,7 +18,41 @@
     //echo "Connection was successful";
     }
 
+    // echo $_POST['snoEdit'];
+    // echo $_GET['update'];
+    // exit();
+
+    if(isset($_GET['delete'])){
+      $sno = $_GET['delete'];
+      $delete = true;
+
+      $sql = "DELETE FROM `nodes` WHERE `sno` = '$sno' ";
+      $result = mysqli_query($conn, $sql);
+
+      //redirection
+      header('refresh:1;url=http://localhost:3000/Create-some-new.php');
+    }
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+      if (isset($_POST['snoEdit'])){
+        //Update the record
+        $sno = $_POST['snoEdit'];
+        $name  = $_POST['nameEdit']; 
+        $title = $_POST['titleEdit'];
+        $desc  = $_POST['descEdit'];
+
+        $sql = "UPDATE `nodes` SET `name` = '$name' , `title` = '$title' , `desc` = '$desc' WHERE `sno` = '$sno' ";
+        $result = mysqli_query($conn, $sql);
+
+        if($result){
+          // echo "<br>Record updated successfully";
+          $update = true;
+      }
+      // else{
+      //     echo "<br>Record could not update";
+      // }
+      }
+      else{
         $name  = $_POST['name']; 
         $title = $_POST['title'];
         $desc  = $_POST['desc'];
@@ -27,6 +63,7 @@
         if($result){
             $add = true;
         }
+      }
     }
 ?>
 
@@ -36,10 +73,49 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="//cdn.datatables.net/2.0.1/css/dataTables.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.dataTables.min.css">
     <title>Add Points/Tasks/Information</title>
   </head>
   <body>
+  <div class="modal" id="editModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update your Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="" method="POST">
+        <div class="modal-body">
+          <input type="hidden" name="snoEdit" id="snoEdit">
+          <div class="form-group mt-3">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="nameEdit" name = "nameEdit" aria-describedby="emailHelp" placeholder="Enter your name" >
+          </div>
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="titleEdit" name = "titleEdit" aria-describedby="emailHelp" placeholder="Enter your title" >
+            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+          </div>
+          <div class="form-group">
+            <label for="desc">Desc</label>
+            <textarea rows="5" class="form-control" name = "descEdit" id="descEdit" placeholder="Enter your desc" ></textarea>
+          </div>
+          <!-- <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+          </div> -->
+          <!-- <button type="submit" class="btn btn-primary">Update</button> -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="">SabkaCode</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,16 +162,27 @@
       </div>
         ';
     }
-    // else{
-    //     echo '
-    //     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    //     <strong>Error!</strong> Your Node have not been  inserted .
-    //     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    //       <span aria-hidden="true">&times;</span>
-    //     </button>
-    //   </div>
-    //     ';
-    // }
+
+        if($update){
+          echo '
+          <div class="alert alert-success alert-success fade show" role="alert">
+          <strong>Success!!</strong> Your data have been updated successfully.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+          ';
+    }
+     if($delete){
+         echo '
+         <div class="alert alert-success alert-dismissible fade show" role="alert">
+         <strong>Success!</strong> Your data have  been  deleted successfully .
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+         ';
+     }
 ?>
 <div class="container mt-3">
 
@@ -120,7 +207,7 @@
   </div> -->
   <button type="submit" class="btn btn-primary">Add</button>
 </form>
-<table class="table mt-5" id="myTable">
+<table style="width:100%;" class="table mt-5" id="myTable">
   <thead>
     <tr>
       <th scope="col">Sno</th>
@@ -135,15 +222,19 @@
     <?php
         $sql = "SELECT * FROM `nodes` ";
         $result = mysqli_query($conn, $sql);
+        $sno = 0;
         while($row = mysqli_fetch_assoc($result)){
+          $sno++;
             echo '
                 <tr>
-                    <th scope="row">'.$row['sno'].'</th>
+                    <th scope="row">'.$sno.'</th>
                     <td>'.$row['name'].'</td>
                     <td>'.$row["title"].'</td>
                     <td>'.$row["desc"].'</td>
                     <td>'.$row["data-time"].'</td>
-                </tr>
+                    <td><button id='.$row['sno'].' class="edit btn btn-sn btn-primary">Edit</button>
+                    <button id=d'.$row['sno'].' class="delete btn btn-sn btn-primary">Delete</button></td>
+                    </tr>
             ';
         }
         ?>
@@ -151,6 +242,7 @@
 </table> 
 
 </div>
+<hr>
 <!-- <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
@@ -165,6 +257,54 @@
         //     $('#myTable').DataTable();
         // })
         let table = new DataTable('#myTable');
+    </script>
+    <script>
+      edit = document.getElementsByClassName('edit');
+      Array.from(edit).forEach((element)=>{
+        element.addEventListener("click", (e)=>{
+          console.log("edit ", );
+          tr = e.target.parentNode.parentNode;
+          name = tr.getElementsByTagName("td")[0].innerText;
+          title = tr.getElementsByTagName("td")[1].innerText;
+          desc = tr.getElementsByTagName("td")[2].innerText;
+
+          console.log(name, title, desc);
+          nameEdit.value = name;
+         titleEdit.value = title;
+          descEdit.value = desc;
+          snoEdit.value = e.target.id;
+          console.log(e.target.id);
+          $('#editModal').modal('toggle');
+        })
+      })  
+
+      delet = document.getElementsByClassName('delete');
+      Array.from(delet).forEach((element)=>{
+        element.addEventListener("click", (e)=>{
+        console.log("edit ", );
+        sno = e.target.id.substr(1,)
+        // tr = e.target.parentNode.parentNode;
+        // name = tr.getElementsByTagName("td")[0].innerText;
+        // title = tr.getElementsByTagName("td")[1].innerText;
+        // desc = tr.getElementsByTagName("td")[2].innerText;
+
+        if(confirm("Are you sure you want to delete this data!")){
+          console.log("yes");
+          window.location = `?delete=${sno}`;
+        }
+        else{
+          console.log("no");
+        }
+
+        //   console.log(name, title, desc);
+        //   nameEdit.value = name;
+        //  titleEdit.value = title;
+        //   descEdit.value = desc;
+        //   snoEdit.value = e.target.id;
+        //   console.log(e.target.id);
+        //   $('#editModal').modal('toggle');
+        })
+      })  
     </script>
   </body>
 </html>

@@ -8,7 +8,7 @@
 
     //for next line
     echo "\n" ;
-//with only two variable
+ //with only two variable
     $x = 50;
     $y = 4;
     echo $x + $y;   

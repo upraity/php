@@ -9,7 +9,7 @@
     function incrementByReference(&$num) {
         $num += 1;
     }
-
+ 
     $value = 5;
 
     // Calling the function by value

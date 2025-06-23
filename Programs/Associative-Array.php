@@ -9,7 +9,7 @@
         echo $arr[$i]. "\n";
     }
 
-    //using array foreach loop
+    //using array foreach loop 
     foreach ($arr as $naam){
         echo $naam. "\n";
     }

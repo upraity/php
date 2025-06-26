@@ -5,7 +5,7 @@
     <title>Input Arrays</title>
 </head>
 <body>
-
+ 
 <form method="post" action="">
     Enter numbers separated by commas to create a regular array: <br>
     <input type="text" name="regularArrayInput">

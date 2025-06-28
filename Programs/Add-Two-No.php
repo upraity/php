@@ -10,6 +10,6 @@
     echo "\n" ;
     //with only two variable
     $x = 50;
-    $y = 4;
+    $y = 4; 
     echo $x + $y;   
 ?>

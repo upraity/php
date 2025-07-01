@@ -4,7 +4,7 @@
 
     echo $arr[0];
     echo $arr[1];
-    //using array for loop
+    //using array for loop 
     for($i = 0; $i < count($arr); $i++){
         echo $arr[$i]. "\n";
     }

@@ -1,4 +1,4 @@
-<!-- Q16. Wap to print elements of an array using each loop.-->
+ <!-- Q16. Wap to print elements of an array using each loop.-->
 <?php
     $colors = array("red", "green", "blue", "yellow");
     

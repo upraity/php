@@ -6,7 +6,7 @@
     }
 
     // Function to increment a number by reference
-    function incrementByReference(&$num) {
+    function incrementByReference(&$num) { 
         $num += 1;
     }
  

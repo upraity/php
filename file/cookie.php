@@ -6,7 +6,7 @@
 ?>
 
     <!DOCTYPE html>
-    <html>
+    <html> 
         <head>
             <title>Cookies Example</title>
         </head>

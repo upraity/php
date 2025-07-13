@@ -3,7 +3,7 @@
     function incrementByValue($num) {
         $num += 1;
         return $num;
-    }
+    } 
 
     // Function to increment a number by reference
     function incrementByReference(&$num) { 

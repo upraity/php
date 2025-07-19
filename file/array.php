@@ -4,7 +4,7 @@
 <head>
     <title>Input Arrays</title>
 </head>
-<body> 
+<body>  
  
 <form method="post" action="">
     Enter numbers separated by commas to create a regular array: <br>

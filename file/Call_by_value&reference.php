@@ -8,7 +8,7 @@
     // Function to increment a number by reference
     function incrementByReference(&$num) { 
         $num += 1; 
-    }
+    } 
  
     $value = 5;
 

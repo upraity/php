@@ -4,7 +4,7 @@
     // }
 
 $pass = false;
-$insert = false;
+$insert = false; 
 $login = false;
 $error = false;
 // $duplicate = false;

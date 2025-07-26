@@ -4,7 +4,7 @@
         $num += 1;
         return $num;
     }  
-
+ 
     // Function to increment a number by reference
     function incrementByReference(&$num) { 
         $num += 1; 

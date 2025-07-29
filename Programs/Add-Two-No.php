@@ -7,7 +7,7 @@
     EcHo ($c);
 
     //for next line
-    echo "\n" ;
+    echo "\n" ; 
     //with only two variable
     $x = 50;
     $y = 4; 

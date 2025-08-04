@@ -6,7 +6,7 @@
     $c = $a + $b; 
     EcHo ($c);
 
-    //for next line
+    //for next line 
     echo "\n" ; 
     //with only two variable
     $x = 50;
